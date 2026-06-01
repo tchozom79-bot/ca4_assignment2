@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant Menu - EAT ELYSIUM</title>
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    padding:0;
+    background:#f5f1ea;
+    font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  width: 100%;
+  background: #0f2b46;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  height: 50px;
+  max-width: 200px;
+  object-fit: contain;
+}
+
+nav ul {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+nav ul li a {
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  color: #ff4d4d;
+}
+
+.cart-bar {
+  background: #f5f1ea;
+  padding: 15px 8%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-count {
+  color: #0f2b46;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-count:hover {
+  color: #ff4d4d;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 350px;
+  height: 100vh;
+  background: white;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+  transition: right 0.3s ease;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-drawer.open {
+  right: 0;
+}
+
+.cart-header {
+  background: #0f2b46;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.cart-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-info h6 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-item-info p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.quantity-btn {
+  width: 25px;
+  height: 25px;
+  border: none;
+  border-radius: 50%;
+  background: #f0f0f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.quantity-btn:hover {
+  background: #e0e0e0;
+}
+
+.cart-item-price {
+  font-weight: 600;
+  color: #c62828;
+  font-size: 16px;
+}
+
+.cart-footer {
+  border-top: 1px solid #eee;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background: #c62828;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background: #ff4d4d;
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1999;
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.empty-cart p {
+  margin: 10px 0 0 0;
+  font-size: 16px;
+}
+
+.menu-container{
+    max-width:1000px;
+    margin:50px auto;
+    padding:0 8%;
+}
+
+.category-tabs{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:20px;
+    padding-bottom:10px;
+}
+
+.category-tabs button{
+    border:none;
+    padding:10px 18px;
+    border-radius:20px;
+    background:white;
+    font-size:14px;
+    white-space:nowrap;
+    cursor:pointer;
+    transition: 0.3s;
+}
+
+.active-category{
+    background:#c62828 !important;
+    color:white;
+}
+
+.menu-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:white;
+    border-radius:20px;
+    padding:10px;
+    margin-bottom:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.menu-card img{
+    width:85px;
+    height:85px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+.menu-info{
+    flex:1;
+}
+
+.menu-info h6{
+    margin:0;
+    font-weight:bold;
+}
+
+.menu-info p{
+    margin:5px 0;
+    color:gray;
+    font-size:14px;
+}
+
+.price{
+    color:#c62828;
+    font-weight:bold;
+}
+
+.add-btn{
+    width:35px;
+    height:35px;
+    border:none;
+    border-radius:50%;
+    background:#0f2b46;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition: 0.3s;
+}
+
+.add-btn:hover{
+    background:#c62828;
+    transform: scale(1.1);
+}
+
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: #0f2b46;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.menu-card[style*="display: none"]{
+    display: none !important;
+}
+
+.favorite-section{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-top:20px;
+}
+
+footer {
+  background: #0f2b46;
+  color: white;
+  padding: 40px 8%;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.footer-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.footer-links a:hover {
+  color: #ff4d4d;
+}
+
+@media (max-width: 768px){
+  header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  nav ul {
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .menu-container{
+    max-width:100%;
+    margin:30px auto;
+  }
+
+  .category-tabs {
+    flex-wrap: wrap;
+  }
+
+  .menu-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .menu-info {
+    width: 100%;
+  }
+
+  .add-btn {
+    align-self: flex-end;
+  }
+}
+
+      @media (max-width: 992px) {
+        header {
+          padding: 18px 5%;
+        }
+
+        .section,
+        .page-title,
+        .auth-container,
+        .reservation-container,
+        .contact-grid,
+        .profile-grid,
+        .menu-container,
+        .mobile-container {
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
+          padding: 16px 4%;
+        }
+
+        nav ul {
+          gap: 14px;
+          justify-content: center;
+        }
+
+        .page-title {
+          margin: 40px auto 24px;
+          padding: 0 4%;
+        }
+
+        .page-title h1 {
+          font-size: 32px;
+        }
+
+        .hero {
+          padding: 40px 4%;
+        }
+
+        .hero-content h1 {
+          font-size: 32px;
+        }
+
+        .hero-content p {
+          font-size: 16px;
+        }
+
+        .about-text h2 {
+          font-size: 32px;
+        }
+
+        .card-container,
+        .feature-grid,
+        .contact-grid,
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .menu-card img {
+          width: 100%;
+          height: auto;
+        }
+
+        .menu-container {
+          padding-left: 4%;
+          padding-right: 4%;
+        }
+
+        .reservation-hero {
+          padding: 60px 4%;
+        }
+
+        .reservation-hero h1 {
+          font-size: 32px;
+        }
+
+        .form-card,
+        .auth-card,
+        .contact-card,
+        .contact-form,
+        .profile-card,
+        .summary-card,
+        .about-card,
+        .feature-box,
+        .team-section {
+          padding: 24px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" alt="Restaurant Logo" class="logo">
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="reservation.html">Reservation</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="signup.html">Sign Up</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="cart-bar">
+  <div class="cart-count">Cart: <span id="cartCount">0</span></div>
+</div>
+
+<div class="menu-container">
+
+    <h1 style="color: #0f2b46; margin-bottom: 30px; text-align: center;">Our Menu</h1>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+
+        <button class="active-category" onclick="filterMenu('All')">All</button>
+        <button onclick="filterMenu('Starters')">Starters</button>
+        <button onclick="filterMenu('Main Course')">Main Course</button>
+        <button onclick="filterMenu('Desserts')">Desserts</button>
+        <button onclick="filterMenu('Beverages')">Beverages</button>
+
+    </div>
+
+    <!-- STARTERS -->
+    <div class="menu-card" data-category="Starters">
+        <img src="./emadatse.png">
+        <div class="menu-info">
+            <h6>Ema Datsi</h6>
+            <p>Green chilies cooked in a creamy blend of cheese and butter.</p>
+            <span class="price">Nu. 150</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Starters">
+        <img src="./pokora.png">
+        <div class="menu-info">
+            <h6>Pokora</h6>
+            <p>Crispy fritters made with mixed vegetables, herbs and mild spices.</p>
+            <span class="price">Nu. 180</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Starters">
+        <img src="./shakam pa.png">
+        <div class="menu-info">
+            <h6>Shakam Pa</h6>
+            <p>Spicy dry pork cooked with red chilies, garlic and traditional spices.</p>
+            <span class="price">Nu. 220</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Starters">
+        <img src="./shamudatse.png">
+        <div class="menu-info">
+            <h6>Shamu Datsi</h6>
+            <p>Sautéed mushrooms cooked with cheese, garlic and green chilies.</p>
+            <span class="price">Nu. 190</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <!-- MAIN COURSE -->
+    <div class="menu-card" data-category="Main Course">
+        <img src="./pork.png">
+        <div class="menu-info">
+            <h6>Pork Curry</h6>
+            <p>Tender pork cooked with onions, tomatoes and aromatic spices.</p>
+            <span class="price">Nu. 350</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Main Course">
+        <img src="./khadai.png">
+        <div class="menu-info">
+            <h6>Khadai Paneer</h6>
+            <p>Cottage cheese and vegetables cooked in a spiced, creamy sauce.</p>
+            <span class="price">Nu. 420</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Main Course">
+        <img src="./chicken.png">
+        <div class="menu-info">
+            <h6>Chicken Curry</h6>
+            <p>Chicken cooked with onions, tomatoes and traditional spices.</p>
+            <span class="price">Nu. 480</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Main Course">
+        <img src="./mix veg.png">
+        <div class="menu-info">
+            <h6>Mixed Vegetables</h6>
+            <p>Seasonal vegetables cooked with mild spices and herbs.</p>
+            <span class="price">Nu. 550</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Main Course">
+        <img src="./jasha.png">
+        <div class="menu-info">
+            <h6>Shakam Jasha</h6>
+            <p>Pork stir-fried with radish leaves, garlic, ginger and chilies.</p>
+            <span class="price">Nu. 620</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Main Course">
+        <img src="./beef.png">
+        <div class="menu-info">
+            <h6>Beef Curry</h6>
+            <p> tender beef cooked with potatoes, spices and herbs.</p>
+            <span class="price">Nu. 380</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <!-- DESSERTS -->
+    <div class="menu-card" data-category="Desserts">
+        <img src="./kha zoey.png">
+        <div class="menu-info">
+            <h6>Kha Zoey</h6>
+            <p>Traditional rice pudding cooked with milk, sugar and cardamom.</p>
+            <span class="price">Nu. 280</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Desserts">
+        <img src="./ju sha.png">
+        <div class="menu-info">
+            <h6>Ju Sha</h6>
+            <p>Sweetened buckwheat pudding flavored with butter and cardamom.</p>
+            <span class="price">Nu. 250</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Desserts">
+        <img src="./khabzhay.png">
+        <div class="menu-info">
+            <h6>Khabzhay</h6>
+            <p>Deep-fried twisted dough coated with honey or sugar.</p>
+            <span class="price">Nu. 300</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Desserts">
+        <img src="./ras malai.png">
+        <div class="menu-info">
+            <h6>Ras Malai</h6>
+            <p>Soft cheese dumplings served in sweetened, flavored milk.</p>
+            <span class="price">Nu. 270</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Desserts">
+        <img src="./cheese cake.png">
+        <div class="menu-info">
+            <h6>Cheese Cake</h6>
+            <p>Rich and creamy baked cheesecake made with local ingredients.</p>
+            <span class="price">Nu. 220</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <!-- BEVERAGES -->
+    <div class="menu-card" data-category="Beverages">
+        <img src="./suja.png">
+        <div class="menu-info">
+            <h6>Suga</h6>
+            <p>Traditional butter tea made with tea leaves, yak butter and salt.</p>
+            <span class="price">Nu. 80</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Beverages">
+        <img src="./kawa.png">
+        <div class="menu-info">
+            <h6>Kawa</h6>
+            <p>Aromatic tea infused with saffron, cardamom and spices.</p>
+            <span class="price">Nu. 120</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Beverages">
+        <img src="./ara.png">
+        <div class="menu-info">
+            <h6>Ara</h6>
+            <p>Traditional fermented beverage made from rice, barley or millet.</p>
+            <span class="price">Nu. 90</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Beverages">
+        <img src="./herbal tea.png">
+        <div class="menu-info">
+            <h6>Herbal Tea</h6>
+            <p>Soothing infusion of local herbs and mountain plants.</p>
+            <span class="price">Nu. 110</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Beverages">
+        <img src="./sea juice.png">
+        <div class="menu-info">
+            <h6>Sea Buckthorn juice</h6>
+            <p>Nutrient-rich juice made from Himalayan sea buckthorn berries.</p>
+            <span class="price">Nu. 150</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <div class="menu-card" data-category="Beverages">
+        <img src="./rosselie.png">
+        <div class="menu-info">
+            <h6>Rossellie Juice</h6>
+            <p>Refreshing and tangy drink made from roselle (hibiscus) calyces.</p>
+            <span class="price">Nu. 280</span>
+        </div>
+        <button class="add-btn">+</button>
+    </div>
+
+    <!-- Stickiness Feature -->
+    <div class="favorite-section">
+
+        <h5>❤️ Enjoy Your Favorite Meals</h5>
+
+        <p>
+            Add your favorite items to the cart!
+        </p>
+
+    </div>
+
+    <div class="toast" id="toastMessage"></div>
+
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="cart-close" id="cartClose">&times;</button>
+  </div>
+  
+  <div class="cart-items" id="cartItems">
+    <div class="empty-cart">
+      <p>Your cart is empty</p>
+      <p>Add some delicious items!</p>
+    </div>
+  </div>
+  
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cartTotal">Nu. 0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+  </div>
+</div>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<footer>
+  <p>© 2026 EAT ELYSIUM Restaurant. All Rights Reserved.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="aboutus.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="profile.html">Profile</a>
+  </div>
+</footer>
+
+<script>
+const cartCountEl = document.getElementById('cartCount');
+const toastMessage = document.getElementById('toastMessage');
+const cartDrawer = document.getElementById('cartDrawer');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const cartClose = document.getElementById('cartClose');
+const checkoutBtn = document.getElementById('checkoutBtn');
+
+let cartItemsData = [];
+let cartCount = 0;
+
+function showToast(message) {
+    toastMessage.textContent = message;
+    toastMessage.classList.add('visible');
+    clearTimeout(window.toastTimeout);
+    window.toastTimeout = setTimeout(() => {
+        toastMessage.classList.remove('visible');
+    }, 2200);
+}
+
+function openCart() {
+    cartDrawer.classList.add('open');
+    cartOverlay.classList.add('open');
+}
+
+function closeCart() {
+    cartDrawer.classList.remove('open');
+    cartOverlay.classList.remove('open');
+}
+
+function updateCartDisplay() {
+    cartCountEl.textContent = cartCount;
+    
+    if (cartItemsData.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+                <p>Your cart is empty</p>
+                <p>Add some delicious items!</p>
+            </div>
+        `;
+        cartTotal.textContent = 'Nu. 0';
+        return;
+    }
+    
+    let total = 0;
+    cartItems.innerHTML = '';
+    
+    cartItemsData.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        cartItems.innerHTML += `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.title}">
+                <div class="cart-item-info">
+                    <h6>${item.title}</h6>
+                    <p>Nu. ${item.price}</p>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                </div>
+                <div class="cart-item-price">Nu. ${itemTotal}</div>
+            </div>
+        `;
+    });
+    
+    cartTotal.textContent = `Nu. ${total}`;
+}
+
+function addToCart(button) {
+    const card = button.closest('.menu-card');
+    const title = card.querySelector('.menu-info h6').textContent;
+    const priceText = card.querySelector('.price').textContent;
+    const price = parseInt(priceText.replace('Nu. ', ''));
+    const image = card.querySelector('img').src;
+    
+    // Check if item already exists in cart
+    const existingItem = cartItemsData.find(item => item.title === title);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cartItemsData.push({
+            title: title,
+            price: price,
+            image: image,
+            quantity: 1
+        });
+    }
+    
+    cartCount += 1;
+    updateCartDisplay();
+    showToast(`${title} added to cart`);
+}
+
+function updateQuantity(index, change) {
+    cartItemsData[index].quantity += change;
+    
+    if (cartItemsData[index].quantity <= 0) {
+        cartItemsData.splice(index, 1);
+    }
+    
+    cartCount = cartItemsData.reduce((total, item) => total + item.quantity, 0);
+    updateCartDisplay();
+}
+
+function checkout() {
+    if (cartItemsData.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+    }
+    
+    const total = cartItemsData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    showToast(`Order placed! Total: Nu. ${total}`);
+    
+    // Reset cart
+    cartItemsData = [];
+    cartCount = 0;
+    updateCartDisplay();
+    closeCart();
+}
+
+// Event listeners
+document.querySelectorAll('.add-btn').forEach(button => {
+    button.addEventListener('click', () => addToCart(button));
+});
+
+cartCountEl.parentElement.addEventListener('click', openCart);
+cartClose.addEventListener('click', closeCart);
+cartOverlay.addEventListener('click', closeCart);
+checkoutBtn.addEventListener('click', checkout);
+
+// Initialize cart display
+updateCartDisplay();
+
+function filterMenu(category) {
+    const cards = document.querySelectorAll('.menu-card');
+    const buttons = document.querySelectorAll('.category-tabs button');
+    
+    // Update active button
+    buttons.forEach(btn => {
+        btn.classList.remove('active-category');
+        if (btn.textContent.trim() === category) {
+            btn.classList.add('active-category');
+        }
+    });
+    
+    // Filter cards
+    cards.forEach(card => {
+        if (category === 'All') {
+            card.style.display = 'flex';
+        } else if (card.getAttribute('data-category') === category) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+</script>
+
+</body>
+</html>

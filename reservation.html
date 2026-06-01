@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Make a Reservation - EAT ELYSIUM</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f1ea;
+        color: #222;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      header {
+        width: 100%;
+        background: #0f2b46;
+        padding: 18px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo {
+        height: 50px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      nav ul li a {
+        color: white;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #ff4d4d;
+      }
+
+      .reservation-hero {
+        background: linear-gradient(rgba(15, 43, 70, 0.8), rgba(15, 43, 70, 0.8));
+        color: white;
+        padding: 80px 8%;
+        text-align: center;
+      }
+
+      .reservation-hero h1 {
+        font-size: 48px;
+        margin-bottom: 15px;
+      }
+
+      .reservation-hero p {
+        font-size: 18px;
+        opacity: 0.95;
+      }
+
+      .reservation-container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 0 8%;
+      }
+
+      .form-card {
+        background: white;
+        border-radius: 18px;
+        padding: 40px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #0f2b46;
+        font-size: 15px;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-family: "Poppins", sans-serif;
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #c62828;
+        box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .form-row .form-group {
+        margin-bottom: 0;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+
+      .submit-btn {
+        display: inline-block;
+        width: 100%;
+        background: #c62828;
+        color: white;
+        padding: 16px 35px;
+        border: none;
+        border-radius: 40px;
+        font-size: 17px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        background: #ff4d4d;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(198, 40, 40, 0.3);
+      }
+
+      .success-message {
+        background: #4caf50;
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: none;
+        text-align: center;
+      }
+
+      .info-section {
+        background: #f9f9f9;
+        padding: 30px;
+        border-radius: 18px;
+        margin-bottom: 30px;
+        margin-top: 50px;
+      }
+
+      .info-section h3 {
+        color: #0f2b46;
+        margin-bottom: 15px;
+        font-size: 22px;
+      }
+
+      .info-section p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 10px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .info-item {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid #c62828;
+      }
+
+      .info-item h4 {
+        color: #0f2b46;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+
+      .info-item p {
+        color: #666;
+        font-size: 15px;
+        margin: 0;
+      }
+
+      footer {
+        background: #0f2b46;
+        color: white;
+        padding: 40px 8%;
+        text-align: center;
+        margin-top: 60px;
+      }
+
+      .footer-links {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a:hover {
+        color: #ff4d4d;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        nav ul {
+          gap: 18px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .reservation-hero h1 {
+          font-size: 32px;
+        }
+
+        .reservation-hero p {
+          font-size: 16px;
+        }
+
+        .form-card {
+          padding: 25px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .reservation-container {
+          margin: 30px auto;
+        }
+      }
+
+      @media (max-width: 992px) {
+        header {
+          padding: 18px 5%;
+        }
+
+        .section,
+        .page-title,
+        .auth-container,
+        .reservation-container,
+        .contact-grid,
+        .profile-grid,
+        .menu-container,
+        .mobile-container {
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
+          padding: 16px 4%;
+        }
+
+        nav ul {
+          gap: 14px;
+          justify-content: center;
+        }
+
+        .page-title {
+          margin: 40px auto 24px;
+          padding: 0 4%;
+        }
+
+        .page-title h1 {
+          font-size: 32px;
+        }
+
+        .hero {
+          padding: 40px 4%;
+        }
+
+        .hero-content h1 {
+          font-size: 32px;
+        }
+
+        .hero-content p {
+          font-size: 16px;
+        }
+
+        .about-text h2 {
+          font-size: 32px;
+        }
+
+        .card-container,
+        .feature-grid,
+        .contact-grid,
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .menu-card img {
+          width: 100%;
+          height: auto;
+        }
+
+        .menu-container {
+          padding-left: 4%;
+          padding-right: 4%;
+        }
+
+        .reservation-hero {
+          padding: 60px 4%;
+        }
+
+        .reservation-hero h1 {
+          font-size: 32px;
+        }
+
+        .form-card,
+        .auth-card,
+        .contact-card,
+        .contact-form,
+        .profile-card,
+        .summary-card,
+        .about-card,
+        .feature-box,
+        .team-section {
+          padding: 24px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img src="logo.png" alt="Restaurant Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="reservation.html">Reservation</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="reservation-container">
+      <div class="form-card">
+        <div class="success-message" id="successMessage">
+          ✓ Reservation submitted successfully! We'll confirm soon.
+        </div>
+
+        <form id="reservationForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+975 1234 5678"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="guests">Number of Guests *</label>
+              <select id="guests" name="guests" required>
+                <option value="">Select number of guests</option>
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+                <option value="6">6 Guests</option>
+                <option value="7">7 Guests</option>
+                <option value="8">8 Guests</option>
+                <option value="9">9+ Guests</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Preferred Date *</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+
+            <div class="form-group">
+              <label for="time">Preferred Time *</label>
+              <input type="time" id="time" name="time" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="dietary">Dietary Preferences</label>
+            <textarea
+              id="dietary"
+              name="dietary"
+              placeholder="Please let us know any dietary restrictions or special preferences..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="occasion">Special Occasion</label>
+            <select id="occasion" name="occasion">
+              <option value="">Select occasion (optional)</option>
+              <option value="birthday">Birthday</option>
+              <option value="anniversary">Anniversary</option>
+              <option value="business">Business Dinner</option>
+              <option value="celebration">Celebration</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submit-btn">Confirm Reservation</button>
+        </form>
+      </div>
+
+      <div class="info-section">
+        <h3>Restaurant Hours & Information</h3>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <h4>🕐 Hours</h4>
+            <p>Mon - Thu: 11:00 AM - 10:00 PM</p>
+            <p>Fri - Sat: 11:00 AM - 11:00 PM</p>
+            <p>Sunday: 12:00 PM - 10:00 PM</p>
+          </div>
+
+          <div class="info-item">
+            <h4>📍 Location</h4>
+            <p>Thimphu, Bhutan</p>
+            <p>Phone: +975 1234 5678</p>
+            <p>Email: reservations@eatelysium.com</p>
+          </div>
+
+          <div class="info-item">
+            <h4>👥 Capacity</h4>
+            <p>Max: 100 guests</p>
+            <p>Private rooms available</p>
+            <p>Groups welcome</p>
+          </div>
+
+          <div class="info-item">
+            <h4>💳 Payment</h4>
+            <p>All major cards accepted</p>
+            <p>Online reservation deposit available</p>
+            <p>Cancellation policy applies</p>
+          </div>
+        </div>
+
+        <p style="margin-top: 20px; color: #666; font-size: 14px;">
+          <strong>Note:</strong> A table reservation will be held for 15 minutes
+          after your scheduled time. For reservations of 8 or more guests,
+          please contact us directly at the number above.
+        </p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 EAT ELYSIUM Restaurant. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="reservation.html">Reservation</a>
+        <a href="aboutus.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="profile.html">Profile</a>
+      </div>
+    </footer>
+
+    <script>
+      // Set minimum date to today
+      const today = new Date().toISOString().split("T")[0];
+      document.getElementById("date").setAttribute("min", today);
+
+      // Form submission handler
+      function handleSubmit(event) {
+        event.preventDefault();
+
+        // Get form values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const guests = document.getElementById("guests").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const dietary = document.getElementById("dietary").value;
+        const occasion = document.getElementById("occasion").value;
+
+        // Basic validation
+        if (!name || !email || !phone || !guests || !date || !time) {
+          alert("Please fill in all required fields!");
+          return;
+        }
+
+        // Show success message
+        const successMessage = document.getElementById("successMessage");
+        successMessage.style.display = "block";
+
+        // Log reservation data (in a real app, this would be sent to a server)
+        console.log("Reservation Details:", {
+          name,
+          email,
+          phone,
+          guests,
+          date,
+          time,
+          dietary,
+          occasion,
+        });
+
+        // Reset form
+        document.getElementById("reservationForm").reset();
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          successMessage.style.display = "none";
+        }, 5000);
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>

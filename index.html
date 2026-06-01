@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Landing Page</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f1ea;
+        color: #222;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      
+
+      header {
+        width: 100%;
+        background: #0f2b46;
+        padding: 18px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo {
+        height: 50px;
+        max-width: 200px;
+        object-fit: contain;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 30px;
+        list-style: none;
+      }
+
+      nav ul li a {
+        color: white;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      nav ul li a:hover {
+        color: #ff4d4d;
+      }
+
+     
+
+      .hero {
+        min-height: 90vh;
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+          url("./Bg.png");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        padding: 0 8%;
+      }
+
+      .hero-content {
+        max-width: 600px;
+        color: white;
+      }
+
+      .hero-content h1 {
+        font-size: 58px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+
+      .hero-content p {
+        font-size: 18px;
+        margin-bottom: 30px;
+        line-height: 1.8;
+      }
+
+      .cta-btn {
+        display: inline-block;
+        background: #c62828;
+        color: white;
+        padding: 16px 35px;
+        border-radius: 40px;
+        font-size: 17px;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .cta-btn:hover {
+        background: #ff4d4d;
+        transform: translateY(-3px);
+      }
+
+      
+
+      .section {
+        padding: 80px 8%;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      .section-title h2 {
+        font-size: 40px;
+        margin-bottom: 10px;
+        color: #0f2b46;
+      }
+
+      .section-title p {
+        color: #666;
+      }
+
+      /* Cards */
+
+      .card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-8px);
+      }
+
+      .card img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 22px;
+      }
+
+      .card-content h3 {
+        margin-bottom: 12px;
+        font-size: 24px;
+      }
+
+      .card-content p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+
+      .price {
+        color: #c62828;
+        font-weight: 700;
+        font-size: 20px;
+      }
+
+      
+
+      .about {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+      }
+
+      .about img {
+        width: 50%;
+        border-radius: 20px;
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-text h2 {
+        font-size: 42px;
+        margin-bottom: 20px;
+        color: #0f2b46;
+      }
+
+      .about-text p {
+        line-height: 1.9;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      
+
+      footer {
+        background: #0f2b46;
+        color: white;
+        padding: 40px 8%;
+        text-align: center;
+      }
+
+      .footer-links {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a:hover {
+        color: #ff4d4d;
+      }
+
+      
+
+      
+
+      @media (max-width: 992px) {
+        .hero-content h1 {
+          font-size: 45px;
+        }
+
+        .card-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about {
+          flex-direction: column;
+        }
+
+        .about img {
+          width: 100%;
+        }
+      }
+
+    
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        nav ul {
+          gap: 18px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .hero {
+          text-align: center;
+          justify-content: center;
+        }
+
+        .hero-content h1 {
+          font-size: 34px;
+        }
+
+        .hero-content p {
+          font-size: 16px;
+        }
+
+        .card-container {
+          grid-template-columns: 1fr;
+        }
+
+        .section-title h2 {
+          font-size: 32px;
+        }
+
+        .about-text h2 {
+          font-size: 32px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        header {
+          padding: 18px 5%;
+        }
+
+        .section,
+        .page-title,
+        .auth-container,
+        .reservation-container,
+        .contact-grid,
+        .profile-grid,
+        .menu-container,
+        .mobile-container {
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+
+        .card-container,
+        .feature-grid,
+        .contact-grid,
+        .profile-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .about {
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .about img {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
+          padding: 16px 4%;
+        }
+
+        nav ul {
+          gap: 14px;
+          justify-content: center;
+        }
+
+        .page-title {
+          margin: 40px auto 24px;
+          padding: 0 4%;
+        }
+
+        .page-title h1 {
+          font-size: 32px;
+        }
+
+        .hero {
+          padding: 40px 4%;
+        }
+
+        .hero-content h1 {
+          font-size: 32px;
+        }
+
+        .hero-content p {
+          font-size: 16px;
+        }
+
+        .about-text h2 {
+          font-size: 32px;
+        }
+
+        .card-container,
+        .feature-grid,
+        .contact-grid,
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-card {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .menu-card img {
+          width: 100%;
+          height: auto;
+        }
+
+        .menu-container {
+          padding-left: 4%;
+          padding-right: 4%;
+        }
+
+        .reservation-hero {
+          padding: 60px 4%;
+        }
+
+        .reservation-hero h1 {
+          font-size: 32px;
+        }
+
+        .form-card,
+        .auth-card,
+        .contact-card,
+        .contact-form,
+        .profile-card,
+        .summary-card,
+        .about-card,
+        .feature-box,
+        .team-section {
+          padding: 24px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    
+
+    <header>
+      <img src="logo.png" alt="Restaurant Logo" class="logo">
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="reservation.html">Reservation</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Experience Fine Dining & Delicious Food</h1>
+
+        <p>
+          Enjoy elegant meals crafted with passion and premium ingredients.
+          Discover the perfect blend of flavor, atmosphere, and unforgettable
+          moments.
+        </p>
+
+        <a href="menu.html" class="cta-btn">Order Now</a>
+      </div>
+    </section>
+
+    
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Today's Highlight</h2>
+        <p>Freshly prepared meals loved by our customers</p>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <img src="./Tomza.png" alt="" />
+
+          <div class="card-content">
+            <h3>Tomza</h3>
+
+            <p>A rice and majestic curry delight.</p>
+
+            <div class="price">Nu.230</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="./Hontay.png" alt="" />
+
+          <div class="card-content">
+            <h3>Hontay</h3>
+
+            <p>Wheat with delicious veggies inside.</p>
+
+            <div class="price">Nu.180</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="./ema.png" alt="" />
+
+          <div class="card-content">
+            <h3>Ema Datse</h3>
+
+            <p>Traditional chilli and cheese stew.</p>
+
+            <div class="price">Nu.150</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <section class="section">
+      <div class="about">
+        <img
+          src="./restaurant.png"
+          alt="restaurant"
+        />
+
+        <div class="about-text">
+          <h2>Why Choose Us?</h2>
+
+          <p>
+            We provide high-quality meals prepared by expert chefs using fresh
+            ingredients. Our restaurant combines elegance, comfort, and
+            unforgettable flavors.
+          </p>
+
+          <p>
+            Whether you are dining with family or friends, we ensure a memorable
+            culinary experience for everyone.
+          </p>
+
+          <a href="reservation.html" class="cta-btn">Book a Table</a>
+        </div>
+      </div>
+    </section>
+
+  
+
+    <footer>
+      <p>© 2026 EAT ELYSIUM Restaurant. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="reservation.html">Reservation</a>
+        <a href="aboutus.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+        <a href="profile.html">Profile</a>
+      </div>
+    </footer>
+  </body>
+</html>
